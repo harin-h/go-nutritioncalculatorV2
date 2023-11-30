@@ -412,7 +412,7 @@ definitions:
         example: 62
         type: number
     type: object
-host: localhost:8080
+host: go-nutritioncalculatorv2.onrender.com
 info:
   contact: {}
   description: API for record all meal that you have in each day and help you calculate
