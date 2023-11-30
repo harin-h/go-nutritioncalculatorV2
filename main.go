@@ -19,7 +19,7 @@ import (
 
 // @title Nutrition Calculator API documentation
 // @version 1.0.0
-// @host localhost:8080
+// @host go-nutritioncalculatorv2.onrender.com
 // @BasePath /
 // @description API for record all meal that you have in each day and help you calculate summary nutrition in each meal and you can save favorite menu and favorite meal for track your diet easily and create your own menu
 
