@@ -68,7 +68,7 @@ func main() {
 	r.HandleFunc("/record/", recordHandler.UpdateRecord).Methods("PUT")
 
 	r.HandleFunc("/recover/", multiHandler.RecoverDeletedMenu).Methods("PUT")
-	r.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
+	r.PathPrefix("/documentation").Handler(httpSwagger.WrapHandler)
 
 	port := os.Getenv("PORT")
 	if port == "" {
