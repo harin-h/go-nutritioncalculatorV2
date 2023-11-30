@@ -1,0 +1,789 @@
+basePath: /
+definitions:
+  handler.multiRequest:
+    properties:
+      deleted_menu_id:
+        description: '"Menu"''s id that was deleted'
+        example: 9
+        type: integer
+      is_create:
+        description: 1 = Want to create new "Menu" for replace "Menu" in the "Favorite
+          List", 0 = Dont want to create new "Menu" so the "Favorite List" that contain
+          the deleted "Menu" will be updated by get the "Menu" off
+        example: 1
+        type: integer
+      new_menu_name:
+        description: New name of recovered "Menu"
+        example: Moo Yang V2
+        type: string
+      user_id:
+        description: '"User Id" that want to recover the deleted "Menu"'
+        example: gooddy20
+        type: string
+    required:
+    - deleted_menu_id
+    - is_create
+    - user_id
+    type: object
+  service.FavListResponse:
+    properties:
+      carb:
+        description: Total carb (g.) in the "Favorite List"
+        example: 20
+        type: number
+      fat:
+        description: Total fat (g.) in the "Favorite List"
+        example: 10
+        type: number
+      id:
+        description: '"Favorite List"''s id that generate by system'
+        example: 1
+        type: integer
+      is_updated:
+        description: 1 = All "Menu" in the "Favorite List" are up to date, 0 = atleast
+          one "Menu" in the "Favorite List" are not up to date
+        example: 1
+        type: integer
+      list:
+        description: Summary meal with "Menu"'s id e.g. "9,9,10" -> 9 = "Moo Yang"
+          and 10 = "Sticky Rice" so the "Favorite List" contain "Moo Yang" 2 ea and
+          "Sticky Rice" 1 ea
+        example: 9,9,10
+        type: string
+      menues:
+        description: Summary each "Menu"'s name and amount of the "Favorite List"
+        example: 'Moo Yang-2, Sticky Rice-1 '
+        type: string
+      name:
+        description: Name of "Favorite List" that named by the user
+        example: Daily Breakfast
+        type: string
+      protein:
+        description: Total protein (g.) in the "Favorite List"
+        example: 40
+        type: number
+    type: object
+  service.LogInRequest:
+    properties:
+      password:
+        description: '"Password"'
+        example: zxc123zxc123
+        type: string
+      user_id:
+        description: '"User Id"'
+        example: gooddy20
+        type: string
+    required:
+    - password
+    - user_id
+    type: object
+  service.LogInResponse:
+    properties:
+      IsLogIn:
+        description: '"true" = Pass, "false" = Incorrect "User Id" or "Password"'
+        example: true
+        type: boolean
+    type: object
+  service.NewFavListRequest:
+    properties:
+      list:
+        description: Summary meal with "Menu"'s id  e.g. "9,9,10" -> 9 = "Moo Yang"
+          and 10 = "Sticky Rice" so the "Favorite List" contain "Moo Yang" 2 ea and
+          "Sticky Rice" 1 ea
+        example: 9,9,10
+        type: string
+      name:
+        description: The name of this "Favorite List"
+        example: Daily Breakfast
+        type: string
+      user_id:
+        description: The "User Id" that create this "Favorite List"
+        example: gooddy20
+        type: string
+    required:
+    - list
+    - name
+    - user_id
+    type: object
+  service.NewMenuRequest:
+    properties:
+      carb:
+        description: Carb (g.) of this "Menu"
+        example: 0
+        type: number
+      creator_id:
+        description: '"User Id" that create this "Menu"'
+        example: gooddy20
+        type: string
+      fat:
+        description: Fat (g.) of this "Menu"
+        example: 0.5
+        type: number
+      name:
+        description: Name of this "Menu"
+        example: 7-11 Pepper Chicken Breast
+        type: string
+      protein:
+        description: Protein (g.) of this "Menu"
+        example: 19
+        type: number
+    required:
+    - carb
+    - creator_id
+    - fat
+    - name
+    - protein
+    type: object
+  service.NewRecordRequest:
+    properties:
+      event_timestamp:
+        description: Timestamp that you eat *format="2023-01-01 00:00:00"
+        example: "2023-11-01 09:30:00"
+        type: string
+      list:
+        description: Summary meal with "Menu"'s id e.g. "9,9,10" -> 9 = "Moo Yang"
+          and 10 = "Sticky Rice" so the "Record" contain "Moo Yang" 2 ea and "Sticky
+          Rice" 1 ea
+        example: 9,9,10
+        type: string
+      note:
+        description: Note for this "Record"
+        example: Breakfast
+        type: string
+      user_id:
+        description: '"User Id" that create this "Record"'
+        example: gooddy20
+        type: string
+      weight:
+        description: Weight (kg.) that you are on that day
+        example: 63
+        type: number
+    required:
+    - event_timestamp
+    - list
+    - user_id
+    type: object
+  service.NewUserRequest:
+    properties:
+      carb:
+        description: Default carb (g.) of the "User"
+        example: 120
+        type: number
+      fat:
+        description: Default fat (g.) of the "User"
+        example: 60
+        type: number
+      password:
+        description: '"Password"'
+        example: zxc123zxc123
+        type: string
+      protein:
+        description: Default protein (g.) of the "User"
+        example: 120
+        type: number
+      user_id:
+        description: '"User Id"'
+        example: gooddy20
+        type: string
+      username:
+        description: '"Username"'
+        example: GoodDy
+        type: string
+      weight:
+        description: Default weight (kg.) of the "User"
+        example: 70
+        type: number
+    required:
+    - password
+    - user_id
+    - username
+    type: object
+  service.RecordResponse:
+    properties:
+      carb:
+        description: Total carb (g.) of the "Record"
+        type: number
+      eventTimestamp:
+        description: Timestamp that you eat *format="2023-01-01 00:00:00"
+        type: string
+      fat:
+        description: Total fat (g.) of the "Record"
+        type: number
+      id:
+        description: '"Record"''s id'
+        type: integer
+      isUpdated:
+        description: 1 = All "Menu" in the "Record" are up to date, 0 = atleast one
+          "Menu" in the "Record" are not up to date
+        type: integer
+      list:
+        description: Summary meal with "Menu"'s id e.g. "9,9,10" -> 9 = "Moo Yang"
+          and 10 = "Sticky Rice" so the "Record" contain "Moo Yang" 2 ea and "Sticky
+          Rice" 1 ea
+        type: string
+      note:
+        description: Note for the "Record"
+        type: string
+      protein:
+        description: Total protein (g.) of the "Record"
+        type: number
+      weight:
+        description: Weight (kg.) that you are on that day
+        type: number
+    type: object
+  service.UpdateFavListRequest:
+    properties:
+      id:
+        description: The "Favorite List"'s id that is updated
+        example: 1
+        type: integer
+      list:
+        description: Summary meal with "Menu"'s id that you want to change e.g. "9,9,10"
+          -> 9 = "Moo Yang" and 10 = "Sticky Rice" so the "Favorite List" contain
+          "Moo Yang" 2 ea and "Sticky Rice" 1 ea
+        example: 9,10
+        type: string
+      name:
+        description: The name that you want to change to
+        example: Daily Breakfast
+        type: string
+    required:
+    - id
+    type: object
+  service.UpdateMenuRequest:
+    properties:
+      carb:
+        description: The carb (g.) that you want to change to
+        example: 1
+        type: number
+      fat:
+        description: The fat (g.) that you want to change to
+        example: 0.5
+        type: number
+      id:
+        description: '"Menu"''s id that you want to update'
+        example: 1
+        type: integer
+      name:
+        description: The name that you want to change to
+        example: 7-11 Chilli Chicken Breast
+        type: string
+      protein:
+        description: The protein (g.) that you want to change to
+        example: 20
+        type: number
+    required:
+    - carb
+    - fat
+    - id
+    - name
+    - protein
+    type: object
+  service.UpdateRecordRequest:
+    properties:
+      event_timestamp:
+        description: Timestamp that you want to change to *format="2023-01-01 00:00:00"
+        example: "2023-11-01 12:30:00"
+        type: string
+      id:
+        description: '"Record"''s id that you want to update'
+        example: 1
+        type: integer
+      list:
+        description: Summary meal with "Menu"'s id that you want to change to e.g.
+          "9,9,10" -> 9 = "Moo Yang" and 10 = "Sticky Rice" so the "Record" contain
+          "Moo Yang" 2 ea and "Sticky Rice" 1 ea
+        example: 9,9,10
+        type: string
+      note:
+        description: Note that you want to change to
+        example: Lunch
+        type: string
+      weight:
+        description: Weight (kg.) that you want to change to
+        example: 63
+        type: number
+    required:
+    - id
+    type: object
+  service.UpdateUserRequest:
+    properties:
+      carb:
+        description: Carb that you want to change to
+        example: 160
+        type: number
+      fat:
+        description: Fat (g.) that you want to change to
+        example: 70
+        type: number
+      favorite_menues:
+        description: Favorite Menues's id that you want to change to e.g. "9,10" 9
+          = "Moo Yang" and 10 = "Sticky Rice" so this "User" got "Moo Yang" and "Sticky
+          Rice" as "Favorite Menu"
+        example: 4,7,9,10,11
+        type: string
+      password:
+        description: '"Password" that you want to change'
+        example: zxc123zxc456
+        type: string
+      protein:
+        description: Protein (g.) that you want to change to
+        example: 150
+        type: number
+      user_id:
+        description: '"User Id"'
+        example: gooddy20
+        type: string
+      username:
+        description: '"Username" that you want to change to'
+        example: GooDDy19
+        type: string
+      weight:
+        description: Weight (kg.) that you want to change to
+        example: 72
+        type: number
+    required:
+    - user_id
+    type: object
+  service.menuResponse:
+    properties:
+      carb:
+        description: Carb of "Menu"
+        example: 0
+        type: number
+      creator_id:
+        description: '"User Id" that create the "Menu"'
+        example: gooddy20
+        type: string
+      creator_name:
+        description: '"Username" that create the "Menu"'
+        example: GoodDy
+        type: string
+      fat:
+        description: Fat of "Menu"
+        example: 5
+        type: number
+      id:
+        description: '"Menu"''s id that generate by system'
+        example: 9
+        type: integer
+      like:
+        description: Amount of using as favorite menu by "User Id"
+        example: 1
+        type: integer
+      name:
+        description: Name of "Menu" that named by the user
+        example: Moo Yang
+        type: string
+      protein:
+        description: Protein of "Menu"
+        example: 20
+        type: number
+      status:
+        description: 1 = Active, 0 = Deleted
+        example: 1
+        type: integer
+    type: object
+  service.userResponse:
+    properties:
+      carb:
+        description: Default carb (g.) of the "User"
+        example: 130
+        type: number
+      fat:
+        description: Default fat (g.) of the "User"
+        example: 40
+        type: number
+      favorite_menues:
+        description: Favorite Menues's id e.g. "9,10" 9 = "Moo Yang" and 10 = "Sticky
+          Rice" so this "User" got "Moo Yang" and "Sticky Rice" as "Favorite Menu"
+        example: 9,10
+        type: string
+      protein:
+        description: Default protein (g.) of the "User"
+        example: 140
+        type: number
+      username:
+        description: '"Username"'
+        example: GoodDy
+        type: string
+      weight:
+        description: Default weight (kg.) of the "User"
+        example: 62
+        type: number
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API for record all meal that you have in each day and help you calculate
+    summary nutrition in each meal and you can save favorite menu and favorite meal
+    for track your diet easily and create your own menu
+  title: Nutrition Calculator API documentation
+  version: 1.0.0
+paths:
+  /favlist/:
+    post:
+      consumes:
+      - application/json
+      description: Create a `Favorite List` for recording the daily meal easily
+      parameters:
+      - description: '`Favorite List`''s data detail'
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/service.NewFavListRequest'
+      responses:
+        "200":
+          description: OK
+        "406":
+          description: Request Body Not Acceptable
+        "500":
+          description: Internal Server Error
+      summary: Create a "Favorite List"
+      tags:
+      - Favorite List
+    put:
+      consumes:
+      - application/json
+      description: Update a `Favorite List`
+      parameters:
+      - description: '`Favorite List`''s data detail that you want to update and can
+          ignore the unchanged parameters'
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/service.UpdateFavListRequest'
+      responses:
+        "200":
+          description: OK
+        "406":
+          description: Request Body Not Acceptable
+        "500":
+          description: Internal Server Error
+      summary: Update a "Favorite List"
+      tags:
+      - Favorite List
+  /favlist/{favlist_id}:
+    delete:
+      description: Delete a `Favorite List`
+      parameters:
+      - description: '`Favorite List`''s id that you want to delete'
+        in: path
+        name: favlist_id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+        "406":
+          description: Request Parameter Not Acceptable
+        "500":
+          description: Internal Server Error
+      summary: Delete a "Favorite List"
+      tags:
+      - Favorite List
+  /favlist/{user_id}:
+    get:
+      description: Get all `Favorite List` of the `User Id`
+      parameters:
+      - description: User Id
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/service.FavListResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+      summary: Get all "Favorite List" of the "User Id"
+      tags:
+      - Favorite List
+  /menu/:
+    get:
+      description: Get all 'Menu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/service.menuResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+      summary: Get all "Menu"
+      tags:
+      - Menu
+    post:
+      consumes:
+      - application/json
+      description: Create a 'Menu'
+      parameters:
+      - description: '`Menu`''s data detail'
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/service.NewMenuRequest'
+      responses:
+        "200":
+          description: OK
+        "406":
+          description: Request Body Not Acceptable
+        "500":
+          description: Internal Server Error
+      summary: Create a "Menu"
+      tags:
+      - Menu
+    put:
+      consumes:
+      - application/json
+      description: Update a `Menu`
+      parameters:
+      - description: '`Menu`''s data detail that you want to update and the unchanged
+          parameters need to be input the old value'
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/service.UpdateMenuRequest'
+      responses:
+        "200":
+          description: OK
+        "406":
+          description: Request Body Not Acceptable
+        "500":
+          description: Internal Server Error
+      summary: Update a "Menu"
+      tags:
+      - Menu
+  /menu/{menu_id}:
+    delete:
+      description: Delete a 'Menu'
+      parameters:
+      - description: '`Menu`''s id that you want to delete'
+        in: path
+        name: menu_id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+        "406":
+          description: Request Parameter Not Acceptable
+        "500":
+          description: Internal Server Error
+      summary: Delete a "Menu"
+      tags:
+      - Menu
+  /record/:
+    post:
+      consumes:
+      - application/json
+      description: Create a 'Record'
+      parameters:
+      - description: '`Record`''s data detail'
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/service.NewRecordRequest'
+      responses:
+        "200":
+          description: OK
+        "406":
+          description: Request Body Not Acceptable
+        "500":
+          description: Internal Server Error
+      summary: Create a "Record"
+      tags:
+      - Record
+    put:
+      consumes:
+      - application/json
+      description: Update a 'Record'
+      parameters:
+      - description: '`Record`''s data detail that you want to change to'
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/service.UpdateRecordRequest'
+      responses:
+        "200":
+          description: OK
+        "406":
+          description: Request Body Not Acceptable or `Record`'s id is not found
+        "500":
+          description: Internal Server Error
+      summary: Update a "Record"
+      tags:
+      - Record
+  /record/{record_id}:
+    delete:
+      description: Delete a 'Record'
+      parameters:
+      - description: '`Record`''s id that you want to delete'
+        in: path
+        name: record_id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+        "406":
+          description: Request parameters Not Acceptable
+        "500":
+          description: Internal Server Error
+      summary: Delete a "Record"
+      tags:
+      - Record
+  /record/{user_id}:
+    get:
+      description: Get all `Record` of `User` by `User Id`
+      parameters:
+      - description: '`User Id` that you want to get `Record`'
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/service.RecordResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+      summary: Get all "Record" of "User"
+      tags:
+      - Record
+  /recover/:
+    put:
+      consumes:
+      - application/json
+      description: Get the deleted `Menu` off from `Favorite Menu` and {1. replace
+        the deleted `Menu` in `Favorite List` with the new `Menu` that has the same
+        detail (Can change the "Menu"'s name) / 2. get the deleted `Menu` off from
+        `Favorite List`}
+      parameters:
+      - description: The data detail that you want
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handler.multiRequest'
+      responses:
+        "200":
+          description: OK
+        "406":
+          description: Request Body Not Acceptable
+        "500":
+          description: Internal Server Error
+      summary: Recover a deleted "Menu"
+      tags:
+      - Recover
+  /user/:
+    post:
+      consumes:
+      - application/json
+      description: Create a `User`
+      parameters:
+      - description: '`User`''s data detail'
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/service.NewUserRequest'
+      responses:
+        "200":
+          description: OK
+        "406":
+          description: Request Body Not Acceptable
+        "500":
+          description: Internal Server Error
+      summary: Create a "User"
+      tags:
+      - User
+  /user/{user_id}:
+    get:
+      description: Get a `User`'s detail by `User Id`
+      parameters:
+      - description: '`User Id`'
+        in: path
+        name: user_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.userResponse'
+        "406":
+          description: '`User Id` is not found'
+        "500":
+          description: Internal Server Error
+      summary: Get a "User"'s detail
+      tags:
+      - User
+  /user/login:
+    put:
+      consumes:
+      - application/json
+      description: Check `User Id` and `Password` are correct or not
+      parameters:
+      - description: '`User Id` and `Password`'
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/service.LogInRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.LogInResponse'
+        "406":
+          description: Request Body Not Acceptable
+        "500":
+          description: Internal Server Error
+      summary: Check "User Id" and "Password" are correct or not
+      tags:
+      - User
+  /user/userdetail:
+    put:
+      description: Update a `User`'s detail
+      parameters:
+      - description: '`User`''s data detail that you want to update and can ignore
+          the unchanged parameters'
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/service.UpdateUserRequest'
+      responses:
+        "200":
+          description: OK
+        "406":
+          description: Request Body Not Acceptable or `User Id` is not found
+        "500":
+          description: Internal Server Error
+      summary: Update a "User"'s detail
+      tags:
+      - User
+swagger: "2.0"
