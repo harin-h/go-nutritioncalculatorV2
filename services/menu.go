@@ -16,7 +16,7 @@ type UpdateMenuRequest struct {
 	Carb    float64 `json:"carb" example:"1" binding:"required"`                          // The carb (g.) that you want to change to
 }
 
-type menuResponse struct {
+type MenuResponse struct {
 	Id          int     `json:"id" example:"9"`                // "Menu"'s id that generate by system
 	Name        string  `json:"name" example:"Moo Yang"`       // Name of "Menu" that named by the user
 	Protein     float64 `json:"protein" example:"20"`          // Protein of "Menu"
@@ -30,8 +30,8 @@ type menuResponse struct {
 
 type MenuService interface {
 	CreateMenu(NewMenuRequest) error
-	GetAllMenues() ([]menuResponse, error)
+	GetAllMenues() ([]MenuResponse, error)
 	UpdateMenu(UpdateMenuRequest) error
-	RecoverMenu(int, string) (*menuResponse, error)
+	RecoverMenu(int, string) (*MenuResponse, error)
 	DeleteMenu(int) error
 }

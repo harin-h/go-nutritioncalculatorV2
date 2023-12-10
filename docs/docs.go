@@ -161,7 +161,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/service.menuResponse"
+                                "$ref": "#/definitions/service.MenuResponse"
                             }
                         }
                     },
@@ -411,7 +411,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.multiRequest"
+                            "$ref": "#/definitions/handler.MultiRequest"
                         }
                     }
                 ],
@@ -553,7 +553,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/service.userResponse"
+                            "$ref": "#/definitions/service.UserResponse"
                         }
                     },
                     "406": {
@@ -567,7 +567,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "handler.multiRequest": {
+        "handler.MultiRequest": {
             "type": "object",
             "required": [
                 "deleted_menu_id",
@@ -668,6 +668,56 @@ const docTemplate = `{
                     "description": "\"true\" = Pass, \"false\" = Incorrect \"User Id\" or \"Password\"",
                     "type": "boolean",
                     "example": true
+                }
+            }
+        },
+        "service.MenuResponse": {
+            "type": "object",
+            "properties": {
+                "carb": {
+                    "description": "Carb of \"Menu\"",
+                    "type": "number",
+                    "example": 0
+                },
+                "creator_id": {
+                    "description": "\"User Id\" that create the \"Menu\"",
+                    "type": "string",
+                    "example": "gooddy20"
+                },
+                "creator_name": {
+                    "description": "\"Username\" that create the \"Menu\"",
+                    "type": "string",
+                    "example": "GoodDy"
+                },
+                "fat": {
+                    "description": "Fat of \"Menu\"",
+                    "type": "number",
+                    "example": 5
+                },
+                "id": {
+                    "description": "\"Menu\"'s id that generate by system",
+                    "type": "integer",
+                    "example": 9
+                },
+                "like": {
+                    "description": "Amount of using as favorite menu by \"User Id\"",
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "description": "Name of \"Menu\" that named by the user",
+                    "type": "string",
+                    "example": "Moo Yang"
+                },
+                "protein": {
+                    "description": "Protein of \"Menu\"",
+                    "type": "number",
+                    "example": 20
+                },
+                "status": {
+                    "description": "1 = Active, 0 = Deleted",
+                    "type": "integer",
+                    "example": 1
                 }
             }
         },
@@ -840,6 +890,9 @@ const docTemplate = `{
                     "description": "Summary meal with \"Menu\"'s id e.g. \"9,9,10\" -\u003e 9 = \"Moo Yang\" and 10 = \"Sticky Rice\" so the \"Record\" contain \"Moo Yang\" 2 ea and \"Sticky Rice\" 1 ea",
                     "type": "string"
                 },
+                "menues": {
+                    "type": "string"
+                },
                 "note": {
                     "description": "Note for the \"Record\"",
                     "type": "string"
@@ -995,57 +1048,7 @@ const docTemplate = `{
                 }
             }
         },
-        "service.menuResponse": {
-            "type": "object",
-            "properties": {
-                "carb": {
-                    "description": "Carb of \"Menu\"",
-                    "type": "number",
-                    "example": 0
-                },
-                "creator_id": {
-                    "description": "\"User Id\" that create the \"Menu\"",
-                    "type": "string",
-                    "example": "gooddy20"
-                },
-                "creator_name": {
-                    "description": "\"Username\" that create the \"Menu\"",
-                    "type": "string",
-                    "example": "GoodDy"
-                },
-                "fat": {
-                    "description": "Fat of \"Menu\"",
-                    "type": "number",
-                    "example": 5
-                },
-                "id": {
-                    "description": "\"Menu\"'s id that generate by system",
-                    "type": "integer",
-                    "example": 9
-                },
-                "like": {
-                    "description": "Amount of using as favorite menu by \"User Id\"",
-                    "type": "integer",
-                    "example": 1
-                },
-                "name": {
-                    "description": "Name of \"Menu\" that named by the user",
-                    "type": "string",
-                    "example": "Moo Yang"
-                },
-                "protein": {
-                    "description": "Protein of \"Menu\"",
-                    "type": "number",
-                    "example": 20
-                },
-                "status": {
-                    "description": "1 = Active, 0 = Deleted",
-                    "type": "integer",
-                    "example": 1
-                }
-            }
-        },
-        "service.userResponse": {
+        "service.UserResponse": {
             "type": "object",
             "properties": {
                 "carb": {

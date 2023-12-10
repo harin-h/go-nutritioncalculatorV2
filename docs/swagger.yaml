@@ -1,6 +1,6 @@
 basePath: /
 definitions:
-  handler.multiRequest:
+  handler.MultiRequest:
     properties:
       deleted_menu_id:
         description: '"Menu"''s id that was deleted'
@@ -83,6 +83,45 @@ definitions:
         description: '"true" = Pass, "false" = Incorrect "User Id" or "Password"'
         example: true
         type: boolean
+    type: object
+  service.MenuResponse:
+    properties:
+      carb:
+        description: Carb of "Menu"
+        example: 0
+        type: number
+      creator_id:
+        description: '"User Id" that create the "Menu"'
+        example: gooddy20
+        type: string
+      creator_name:
+        description: '"Username" that create the "Menu"'
+        example: GoodDy
+        type: string
+      fat:
+        description: Fat of "Menu"
+        example: 5
+        type: number
+      id:
+        description: '"Menu"''s id that generate by system'
+        example: 9
+        type: integer
+      like:
+        description: Amount of using as favorite menu by "User Id"
+        example: 1
+        type: integer
+      name:
+        description: Name of "Menu" that named by the user
+        example: Moo Yang
+        type: string
+      protein:
+        description: Protein of "Menu"
+        example: 20
+        type: number
+      status:
+        description: 1 = Active, 0 = Deleted
+        example: 1
+        type: integer
     type: object
   service.NewFavListRequest:
     properties:
@@ -221,6 +260,8 @@ definitions:
           and 10 = "Sticky Rice" so the "Record" contain "Moo Yang" 2 ea and "Sticky
           Rice" 1 ea
         type: string
+      menues:
+        type: string
       note:
         description: Note for the "Record"
         type: string
@@ -345,46 +386,7 @@ definitions:
     required:
     - user_id
     type: object
-  service.menuResponse:
-    properties:
-      carb:
-        description: Carb of "Menu"
-        example: 0
-        type: number
-      creator_id:
-        description: '"User Id" that create the "Menu"'
-        example: gooddy20
-        type: string
-      creator_name:
-        description: '"Username" that create the "Menu"'
-        example: GoodDy
-        type: string
-      fat:
-        description: Fat of "Menu"
-        example: 5
-        type: number
-      id:
-        description: '"Menu"''s id that generate by system'
-        example: 9
-        type: integer
-      like:
-        description: Amount of using as favorite menu by "User Id"
-        example: 1
-        type: integer
-      name:
-        description: Name of "Menu" that named by the user
-        example: Moo Yang
-        type: string
-      protein:
-        description: Protein of "Menu"
-        example: 20
-        type: number
-      status:
-        description: 1 = Active, 0 = Deleted
-        example: 1
-        type: integer
-    type: object
-  service.userResponse:
+  service.UserResponse:
     properties:
       carb:
         description: Default carb (g.) of the "User"
@@ -517,7 +519,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/service.menuResponse'
+              $ref: '#/definitions/service.MenuResponse'
             type: array
         "500":
           description: Internal Server Error
@@ -685,7 +687,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/handler.multiRequest'
+          $ref: '#/definitions/handler.MultiRequest'
       responses:
         "200":
           description: OK
@@ -731,7 +733,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/service.userResponse'
+            $ref: '#/definitions/service.UserResponse'
         "406":
           description: '`User Id` is not found'
         "500":

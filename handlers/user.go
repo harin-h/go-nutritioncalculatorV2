@@ -30,13 +30,13 @@ func NewUserHandler(userSrv service.UserService) userHandler {
 // @Router /user/login [put]
 func (h userHandler) LogIn(w http.ResponseWriter, r *http.Request) {
 	if r.Header.Get("content-type") != "application/json" {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Request body incorrect format"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Header"})
 		return
 	}
 	var request service.LogInRequest
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Paste request body error"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Body"})
 		return
 	}
 	isLogIn, err := h.userSrv.CheckLogIn(request)
@@ -60,13 +60,13 @@ func (h userHandler) LogIn(w http.ResponseWriter, r *http.Request) {
 // @Router /user/ [post]
 func (h userHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 	if r.Header.Get("content-type") != "application/json" {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Request body incorrect format"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Header"})
 		return
 	}
 	var request service.NewUserRequest
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Paste request body error"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Body"})
 		return
 	}
 	err = h.userSrv.CreateUser(request)
@@ -81,7 +81,7 @@ func (h userHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 // @Description Get a `User`'s detail by `User Id`
 // @Tags User
 // @Param user_id path string true "`User Id`"
-// @Response 200 {object} service.userResponse
+// @Response 200 {object} service.UserResponse
 // @Response 406 "`User Id` is not found"
 // @Response 500 "Internal Server Error"
 // @Router /user/{user_id} [get]
@@ -107,13 +107,13 @@ func (h userHandler) GetUserDetail(w http.ResponseWriter, r *http.Request) {
 // @Router /user/userdetail [put]
 func (h userHandler) UpdateUserDetail(w http.ResponseWriter, r *http.Request) {
 	if r.Header.Get("content-type") != "application/json" {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Request body incorrect format"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Header"})
 		return
 	}
 	var request service.UpdateUserRequest
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Paste request body error"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Body"})
 		return
 	}
 	err = h.userSrv.UpdateUser(request)

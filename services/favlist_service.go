@@ -52,7 +52,7 @@ func (s favListService) CreateFavList(newFavListReq NewFavListRequest) error {
 		Name:             newFavListReq.Name,
 		List:             newFavListReq.List,
 		Status:           1,
-		CreatedTimestamp: time.Now().UTC(),
+		CreatedTimestamp: time.Now().UTC().Truncate(time.Second),
 	}
 	_, err := s.favListRepo.CreateFavList(newFavList)
 	if err != nil {
@@ -104,7 +104,7 @@ func (s favListService) RecoverFavList(favListId int, oldMenuId int, newMenuId i
 	favList, err := s.favListRepo.GetFavListById(favListId)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			return errs.AppError{Code: http.StatusNotAcceptable, Message: fmt.Sprint("Favorite List Id - ", favList.Id, "is not found")}
+			return errs.AppError{Code: http.StatusNotAcceptable, Message: fmt.Sprint("Favorite List Id - ", favListId, "is not found")}
 		}
 		logs.Error(err)
 		return errs.AppError{Code: http.StatusInternalServerError, Message: "Unexpected error"}

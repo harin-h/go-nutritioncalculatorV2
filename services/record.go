@@ -19,8 +19,9 @@ type UpdateRecordRequest struct {
 }
 
 type RecordResponse struct {
-	Id             int       `db:"id"`              // "Record"'s id
-	List           string    `db:"list"`            // Summary meal with "Menu"'s id e.g. "9,9,10" -> 9 = "Moo Yang" and 10 = "Sticky Rice" so the "Record" contain "Moo Yang" 2 ea and "Sticky Rice" 1 ea
+	Id             int       `db:"id"`   // "Record"'s id
+	List           string    `db:"list"` // Summary meal with "Menu"'s id e.g. "9,9,10" -> 9 = "Moo Yang" and 10 = "Sticky Rice" so the "Record" contain "Moo Yang" 2 ea and "Sticky Rice" 1 ea
+	Menues         string    `db:"menues"`
 	Note           string    `db:"note"`            // Note for the "Record"
 	Weight         float64   `db:"weight"`          // Weight (kg.) that you are on that day
 	Protein        float64   `db:"protein"`         // Total protein (g.) of the "Record"

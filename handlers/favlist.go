@@ -30,13 +30,13 @@ func NewFavListHandler(favListSrv service.FavListService) favListHandler {
 // @Router /favlist/ [post]
 func (h favListHandler) CreateFavList(w http.ResponseWriter, r *http.Request) {
 	if r.Header.Get("content-type") != "application/json" {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Request body incorrect format"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Header"})
 		return
 	}
 	var request service.NewFavListRequest
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Paste request body error"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Body"})
 		return
 	}
 	err = h.favListSrv.CreateFavList(request)
@@ -81,13 +81,13 @@ func (h favListHandler) DeleteFavList(w http.ResponseWriter, r *http.Request) {
 // @Router /favlist/ [put]
 func (h favListHandler) UpdateFavList(w http.ResponseWriter, r *http.Request) {
 	if r.Header.Get("content-type") != "application/json" {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Request body incorrect format"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Header"})
 		return
 	}
 	var request service.UpdateFavListRequest
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Paste request body error"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Body"})
 		return
 	}
 	err = h.favListSrv.UpdateFavList(request)

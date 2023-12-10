@@ -30,13 +30,13 @@ func NewRecordHandler(recordSrv service.RecordService) recordHandler {
 // @Router /record/ [post]
 func (h recordHandler) CreateRecord(w http.ResponseWriter, r *http.Request) {
 	if r.Header.Get("content-type") != "application/json" {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Request body incorrect format"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Header"})
 		return
 	}
 	var request service.NewRecordRequest
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Paste request body error"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Body"})
 		return
 	}
 	err = h.recordSrv.CreateRecord(request)
@@ -81,13 +81,13 @@ func (h recordHandler) DeleteRecord(w http.ResponseWriter, r *http.Request) {
 // @Router /record/ [put]
 func (h recordHandler) UpdateRecord(w http.ResponseWriter, r *http.Request) {
 	if r.Header.Get("content-type") != "application/json" {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Request body incorrect format"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Header"})
 		return
 	}
 	var request service.UpdateRecordRequest
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Paste request body error"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Body"})
 		return
 	}
 	err = h.recordSrv.UpdateRecord(request)

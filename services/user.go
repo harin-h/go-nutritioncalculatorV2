@@ -21,7 +21,7 @@ type UpdateUserRequest struct {
 	FavoriteMenues string  `json:"favorite_menues" example:"4,7,9,10,11"`         // Favorite Menues's id that you want to change to e.g. "9,10" 9 = "Moo Yang" and 10 = "Sticky Rice" so this "User" got "Moo Yang" and "Sticky Rice" as "Favorite Menu"
 }
 
-type userResponse struct {
+type UserResponse struct {
 	Username       string  `json:"username" example:"GoodDy"`      // "Username"
 	Weight         float64 `json:"weight" example:"62"`            // Default weight (kg.) of the "User"
 	Protein        float64 `json:"protein" example:"140"`          // Default protein (g.) of the "User"
@@ -41,7 +41,7 @@ type LogInResponse struct {
 
 type UserService interface {
 	CheckLogIn(LogInRequest) (*LogInResponse, error)
-	GetUserDetail(string) (*userResponse, error)
+	GetUserDetail(string) (*UserResponse, error)
 	CreateUser(NewUserRequest) error
 	UpdateUser(UpdateUserRequest) error
 	RecoverFavoriteMenues(string, int) error

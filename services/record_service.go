@@ -33,6 +33,7 @@ func (s recordService) GetAllRecordsByUserId(userId string) ([]RecordResponse, e
 			Id:             records[i].Id,
 			List:           records[i].List,
 			Note:           records[i].Note,
+			Menues:         records[i].Menues,
 			Weight:         records[i].Weight,
 			Protein:        records[i].Protein,
 			Fat:            records[i].Fat,
@@ -55,9 +56,10 @@ func (s recordService) CreateRecord(newRecordReq NewRecordRequest) error {
 		UserId:           newRecordReq.UserId,
 		List:             newRecordReq.List,
 		Note:             newRecordReq.Note,
+		Weight:           newRecordReq.Weight,
 		EventTimestamp:   tempEventTimestamp,
 		Status:           1,
-		CreatedTimestamp: time.Now().UTC(),
+		CreatedTimestamp: time.Now().UTC().Truncate(time.Second),
 	}
 	_, err = s.recordRepo.CreateRecord(newRecord)
 	if err != nil {

@@ -30,13 +30,13 @@ func NewMenuHandler(menuSrv service.MenuService) menuHandler {
 // @Router /menu/ [post]
 func (h menuHandler) CreateMenu(w http.ResponseWriter, r *http.Request) {
 	if r.Header.Get("content-type") != "application/json" {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Request body incorrect format"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Header"})
 		return
 	}
 	var request service.NewMenuRequest
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Paste request body error"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Body"})
 		return
 	}
 	err = h.menuSrv.CreateMenu(request)
@@ -81,13 +81,13 @@ func (h menuHandler) DeleteMenu(w http.ResponseWriter, r *http.Request) {
 // @Router /menu/ [put]
 func (h menuHandler) UpdateMenu(w http.ResponseWriter, r *http.Request) {
 	if r.Header.Get("content-type") != "application/json" {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Request body incorrect format"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Header"})
 		return
 	}
 	var request service.UpdateMenuRequest
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Paste request body error"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Body"})
 		return
 	}
 	err = h.menuSrv.UpdateMenu(request)
@@ -102,7 +102,7 @@ func (h menuHandler) UpdateMenu(w http.ResponseWriter, r *http.Request) {
 // @Description Get all 'Menu'
 // @Tags Menu
 // @Produce json
-// @Response 200 {object} []service.menuResponse
+// @Response 200 {object} []service.MenuResponse
 // @Response 500 "Internal Server Error"
 // @Router /menu/ [get]
 func (h menuHandler) GetAllMenues(w http.ResponseWriter, r *http.Request) {

@@ -35,7 +35,7 @@ func (s userService) CheckLogIn(logInReq LogInRequest) (*LogInResponse, error) {
 	return &LogInResponse{IsLogIn: false}, nil
 }
 
-func (s userService) GetUserDetail(userId string) (*userResponse, error) {
+func (s userService) GetUserDetail(userId string) (*UserResponse, error) {
 	user, err := s.userRepo.GetUserById(userId)
 	if err != nil {
 		if err == sql.ErrNoRows {
@@ -44,7 +44,7 @@ func (s userService) GetUserDetail(userId string) (*userResponse, error) {
 		logs.Error(err)
 		return nil, errs.AppError{Code: http.StatusInternalServerError, Message: "Unexpected error"}
 	}
-	userRes := userResponse{
+	userRes := UserResponse{
 		Username:       user.Username,
 		Weight:         user.Weight,
 		Protein:        user.Protein,
@@ -65,7 +65,7 @@ func (s userService) CreateUser(newUser NewUserRequest) error {
 		Fat:              newUser.Fat,
 		Carb:             newUser.Carb,
 		FavoriteMenues:   "",
-		CreatedTimestamp: time.Now().UTC(),
+		CreatedTimestamp: time.Now().UTC().Truncate(time.Second),
 	}
 	var err error
 	var isOk bool
@@ -93,10 +93,14 @@ func (s userService) CreateUser(newUser NewUserRequest) error {
 	_, err = s.userRepo.GetUserById(user.UserId)
 	if err == nil {
 		return errs.AppError{Code: http.StatusNotAcceptable, Message: "User Id is already used"}
+	} else if err != sql.ErrNoRows {
+		return errs.AppError{Code: http.StatusInternalServerError, Message: "Unexpected error"}
 	}
 	_, err = s.userRepo.GetUserByUsername(user.Username)
 	if err == nil {
 		return errs.AppError{Code: http.StatusNotAcceptable, Message: "Username is already used"}
+	} else if err != sql.ErrNoRows {
+		return errs.AppError{Code: http.StatusInternalServerError, Message: "Unexpected error"}
 	}
 	err = s.userRepo.CreateUser(user)
 	if err != nil {
@@ -161,7 +165,7 @@ func (s userService) UpdateUser(newUpdateUser UpdateUserRequest) error {
 	if updateUser.Carb == 0 {
 		updateUser.Carb = user.Carb
 	}
-	if updateUser.FavoriteMenues == "" && updateUser != (repository.User{UserId: newUpdateUser.UserId}) {
+	if updateUser.FavoriteMenues == "" && (repository.User{UserId: newUpdateUser.UserId, Password: newUpdateUser.Password, Username: newUpdateUser.Username, Weight: newUpdateUser.Weight, Protein: newUpdateUser.Protein, Fat: newUpdateUser.Fat, Carb: newUpdateUser.Carb, FavoriteMenues: newUpdateUser.FavoriteMenues}) != (repository.User{UserId: newUpdateUser.UserId}) {
 		updateUser.FavoriteMenues = user.FavoriteMenues
 	}
 	err = s.userRepo.UpdateUser(updateUser)

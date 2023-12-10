@@ -13,7 +13,7 @@ type multiHandler struct {
 	favListSrv service.FavListService
 }
 
-type multiRequest struct {
+type MultiRequest struct {
 	UserId        string `json:"user_id" example:"gooddy20" binding:"required"`  // "User Id" that want to recover the deleted "Menu"
 	DeletedMenuId int    `json:"deleted_menu_id" example:"9" binding:"required"` // "Menu"'s id that was deleted
 	NewMenuName   string `json:"new_menu_name" example:"Moo Yang V2"`            // New name of recovered "Menu"
@@ -29,20 +29,20 @@ func NewMultiHandler(menuSrv service.MenuService, userSrv service.UserService, f
 // @Description Get the deleted `Menu` off from `Favorite Menu` and {1. replace the deleted `Menu` in `Favorite List` with the new `Menu` that has the same detail (Can change the "Menu"'s name) / 2. get the deleted `Menu` off from `Favorite List`}
 // @Tags Recover
 // @Accept json
-// @Param request body multiRequest true "The data detail that you want"
+// @Param request body MultiRequest true "The data detail that you want"
 // @Response 200
 // @Response 406 "Request Body Not Acceptable"
 // @Response 500 "Internal Server Error"
 // @Router /recover/ [put]
 func (h multiHandler) RecoverDeletedMenu(w http.ResponseWriter, r *http.Request) {
 	if r.Header.Get("content-type") != "application/json" {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Request body incorrect format"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Header"})
 		return
 	}
-	var request multiRequest
+	var request MultiRequest
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
-		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Paste request body error"})
+		handlerError(w, errs.AppError{Code: http.StatusNotAcceptable, Message: "Incorrect Request Body"})
 		return
 	}
 	userId := request.UserId

@@ -11,8 +11,5 @@ func handlerError(w http.ResponseWriter, err error) {
 	case errs.AppError:
 		w.WriteHeader(e.Code)
 		fmt.Fprintln(w, e)
-	case error:
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintln(w, e)
 	}
 }
