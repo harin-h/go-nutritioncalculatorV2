@@ -24,7 +24,7 @@ import (
 // @description API for record all meal that you have in each day and help you calculate summary nutrition in each meal and you can save favorite menu and favorite meal for track your diet easily and create your own menu
 
 func main() {
-	d, err := sqlx.Connect("postgres", "postgres://postgresql_nutritioncalculator_zrbf_user:M86b8FJlY8Y00Ln0XYug0FnpQUUaO6c1@dpg-cn70prdjm4es73bp9aqg-a.singapore-postgres.render.com/postgresql_nutritioncalculator_zrbf")
+	d, err := sqlx.Connect("postgres", "postgres://postgresql_portfolio_wpec_user:uoTApYmU1hekviTf7UXU2ejezCv46yu3@dpg-cnfqd7n109ks738k8q0g-a.oregon-postgres.render.com/postgresql_portfolio_wpec")
 	if err != nil {
 		panic(err)
 	}
